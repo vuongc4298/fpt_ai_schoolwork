@@ -4,7 +4,7 @@ def quadratic_polynomial(a, b, c, x):
     return a*x**2 + b*x + c
 
 def check_solvability(a, b, c):
-    if (b**2 - 4 * a * c) > 0:
+    if (b**2 - 4 * a * c) >= 0:
         return math.sqrt(b**2 - 4 * a * c)
     return 0
 
