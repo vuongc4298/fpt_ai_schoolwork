@@ -90,10 +90,10 @@ class PupilManager:
             report_choice = input("Enter your choice: ")
 
             if report_choice == '1':
-                # Implement class result functionality
+                self.class_result()
                 pass
             elif report_choice == '2':
-                # Implement pupil report card functionality
+                self.pupil_report_card()
                 pass
             elif report_choice == '3':
                 break
@@ -183,6 +183,5 @@ class PupilManager:
             for subject in self.subjects:
                 print(f"{subject}: {pupil.grade[subject]}")
 
-# pupil_manager = PupilManager()
-# pupil_manager.create_pupil_record()
-# pupil_manager.display_all_pupils()
+pupil_manager = PupilManager()
+pupil_manager.main_menu()
