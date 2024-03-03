@@ -1,9 +1,0 @@
-The output for the input line: hello world!!!!41582190
-
-The letter 'd' appears 1 time(s).
-The letter 'e' appears 1 time(s).
-The letter 'h' appears 1 time(s).
-The letter 'l' appears 3 time(s).
-The letter 'o' appears 2 time(s).
-The letter 'r' appears 1 time(s).
-The letter 'w' appears 1 time(s).
