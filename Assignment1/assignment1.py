@@ -61,25 +61,7 @@ class PupilManager:
 
             else:
                 print("Invalid choice. Please try again.")
-
-    def get_pupil(self, rollno):
-        for pupil in self.pupils:
-            if pupil.rollno == rollno:
-                return pupil
-        return False
     
-    def create_pupil_record(self):
-        flag = 'y'
-        while flag == 'y':
-            rollno = input("Enter roll number: ")
-            name = input("Enter name: ")
-            grade = dict()
-            for subject in self.subjects:
-                grade[subject] = input((f"Enter Marks in {subject}: "))
-            pupil = Pupil(rollno, name, grade)
-            self.pupils.append(pupil)
-            flag = input("Want to enter more record (y/n)?: ")
-
     def report_menu(self):
         while True:
             print("\nREPORT MENU:")
@@ -98,7 +80,46 @@ class PupilManager:
             elif report_choice == '3':
                 break
             else:
-                print("Invalid choice. Please try again.")        
+                print("Invalid choice. Please try again.")
+
+    def rollno_input(self):
+        while True:
+            rollno = input("Enter roll number: ")
+            if not rollno.isnumeric():
+                print("Invalid input. Please try again.")
+                continue
+            break
+        return rollno
+
+    def get_pupil(self, rollno):
+        for pupil in self.pupils:
+            if pupil.rollno == rollno:
+                return pupil
+        return False
+    
+    def create_pupil_record(self):
+        flag = 'y'
+        while flag == 'y':
+            rollno = self.rollno_input()
+            while True:
+                name = input("Enter name: ")
+                if not name.replace(' ', "").isalpha():
+                    print("Invalid input. Please try again.")
+                    continue
+                break
+            grade = dict()
+            for subject in self.subjects:
+                while True:
+                    g = input((f"Enter Marks in {subject}: "))
+                    if not g.isnumeric() or float(g) < 0 or float(g) > 10:
+                        print("Invalid input. Please try again.")
+                        continue
+                    grade[subject] = g
+                    break
+                
+            pupil = Pupil(rollno, name, grade)
+            self.pupils.append(pupil)
+            flag = input("Want to enter more record (y/n)?: ")        
     
     def display_all_pupils_record(self):
         print("\nPUPIL DETAILS...\n")
@@ -109,7 +130,7 @@ class PupilManager:
                 print(f"{subject}: {pupil.grade[subject]}")
     
     def search_pupil_record(self):
-        rollno = input("\nEnter the rollno you want to search: ")
+        rollno = self.rollno_input()
         pupil = self.get_pupil(rollno)
         if not pupil:
             print("Pupil not found.\n")
@@ -122,26 +143,46 @@ class PupilManager:
 
     def modify_pupil_record(self):
         print("\nMODIFY RECORD\n")
-        rollno = input("Enter roll number: ")
+        rollno = self.rollno_input()
         pupil = self.get_pupil(rollno)
         if not pupil:
             print("Pupil not found.\n")
         else:
             print(f"Name: {pupil.name}")
-            edit = input("Want to edit (y/n)?")
-            if edit == 'n':
-                pass
-            elif edit == 'y':
-                new_name = input("Enter new name: ")
-                pupil.name = new_name
-            for subject in self.subjects:
-                print(f"{subject}: {pupil.grade[subject]}")
+            while True:
                 edit = input("Want to edit (y/n)?")
                 if edit == 'n':
                     pass
                 elif edit == 'y':
-                    new_grade = input(f"Enter new grade for {subject}: ")
-                    pupil.grade[subject] = new_grade
+                    while True:
+                        new_name = input("Enter new name: ")
+                        if not new_name.replace(' ', "").isalpha():
+                            print("Invalid input. Please try again.")
+                            continue
+                        break
+                    pupil.name = new_name
+                else:
+                    print("Invalid input. Please try again")
+                    continue
+                break
+            for subject in self.subjects:
+                print(f"{subject}: {pupil.grade[subject]}")
+                while True:
+                    edit = input("Want to edit (y/n)?")
+                    if edit == 'n':
+                        pass
+                    elif edit == 'y':
+                        while True:
+                            new_grade = input(f"Enter new grade for {subject}: ")
+                            if not new_grade.isnumeric() or float(new_grade) < 0 or float(new_grade) > 10:
+                                print("Invalid input. Please try again.")
+                                continue
+                            break
+                        pupil.grade[subject] = new_grade
+                    else:
+                        print("Invalid input. Please try again")
+                        continue
+                    break
             print("Record updated")
             print("\nPUPIL DETAILS...\n")
             print(f"Roll Number: {pupil.rollno}")
@@ -151,7 +192,7 @@ class PupilManager:
 
     def delete_pupil_record(self):
         print("\nDELETE RECORD\n")
-        rollno = input("Enter roll number: ")
+        rollno = self.rollno_input()
         pupil = self.get_pupil(rollno)
         if not pupil:
             print("Pupil not found.")
@@ -172,7 +213,7 @@ class PupilManager:
             print(s)
 
     def pupil_report_card(self):
-        rollno = input("Enter the rollno you want to search: ")
+        rollno = self.rollno_input()
         pupil = self.get_pupil(rollno)
         if not pupil:
             print("Pupil not found.\n")
