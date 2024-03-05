@@ -45,7 +45,7 @@ class PupilManager:
                 self.create_pupil_record()
 
             elif admin_choice == '2':
-                self.display_all_pupil_records()
+                self.display_all_pupils_record()
 
             elif admin_choice == '3':
                 self.search_pupil_record()
@@ -100,8 +100,8 @@ class PupilManager:
             else:
                 print("Invalid choice. Please try again.")        
     
-    def display_all_pupils(self):
-        print("PUPIL DETAILS...")
+    def display_all_pupils_record(self):
+        print("\nPUPIL DETAILS...\n")
         for pupil in self.pupils:
             print(f"Roll Number: {pupil.rollno}")
             print(f"Name: {pupil.name}")
@@ -109,23 +109,23 @@ class PupilManager:
                 print(f"{subject}: {pupil.grade[subject]}")
     
     def search_pupil_record(self):
-        rollno = input("Enter the rollno you want to search: ")
+        rollno = input("\nEnter the rollno you want to search: ")
         pupil = self.get_pupil(rollno)
         if not pupil:
-            print("Pupil not found.")
+            print("Pupil not found.\n")
         else:
-            print("PUPIL DETAILS...")
+            print("\nPUPIL DETAILS...\n")
             print(f"Roll Number: {pupil.rollno}")
             print(f"Name: {pupil.name}")
             for subject in self.subjects:
                 print(f"{subject}: {pupil.grade[subject]}")
 
     def modify_pupil_record(self):
-        print("MODIFY RECORD")
+        print("\nMODIFY RECORD\n")
         rollno = input("Enter roll number: ")
         pupil = self.get_pupil(rollno)
         if not pupil:
-            print("Pupil not found.")
+            print("Pupil not found.\n")
         else:
             print(f"Name: {pupil.name}")
             edit = input("Want to edit (y/n)?")
@@ -143,41 +143,41 @@ class PupilManager:
                     new_grade = input(f"Enter new grade for {subject}: ")
                     pupil.grade[subject] = new_grade
             print("Record updated")
-            print("PUPIL DETAILS...")
+            print("\nPUPIL DETAILS...\n")
             print(f"Roll Number: {pupil.rollno}")
             print(f"Name: {pupil.name}")
             for subject in self.subjects:
                 print(f"{subject}: {pupil.grade[subject]}")
 
     def delete_pupil_record(self):
-        print("DELETE RECORD")
+        print("\nDELETE RECORD\n")
         rollno = input("Enter roll number: ")
         pupil = self.get_pupil(rollno)
         if not pupil:
             print("Pupil not found.")
         else:
-            print("PUPIL DETAILS...")
+            print("\nPUPIL DETAILS...\n")
             print(f"Roll Number: {pupil.rollno}")
             print(f"Name: {pupil.name}")
             for subject in self.subjects:
                 print(f"{subject}: {pupil.grade[subject]}")
             self.pupils.remove(pupil)
-            print("Record found and deleted")
+            print("Record found and deleted.\n")
 
     def class_result(self):
-        headers = "RollNo" + "{:<20}".format("Name") + "".join("{:<10}".format(subject for subject in self.subjects))
+        headers = "{:<10}".format("RollNo") + "{:<20}".format("Name") + "".join("{:<10}".format(subject) for subject in self.subjects)
         print(headers)
         for pupil in self.pupils:
-            s = "RollNo" + "{:<20}".format("Name") + "".join("{:<10}".format(pupil.grade[subject] for subject in self.subjects))
+            s = "{:<10}".format(pupil.rollno) + "{:<20}".format(pupil.name) + "".join("{:<10}".format(pupil.grade[subject]) for subject in self.subjects)
             print(s)
 
     def pupil_report_card(self):
         rollno = input("Enter the rollno you want to search: ")
         pupil = self.get_pupil(rollno)
         if not pupil:
-            print("Pupil not found.")
+            print("Pupil not found.\n")
         else:
-            print("PUPIL DETAILS...")
+            print("\nPUPIL DETAILS...\n")
             print(f"Roll Number: {pupil.rollno}")
             print(f"Name: {pupil.name}")
             for subject in self.subjects:
