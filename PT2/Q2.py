@@ -51,7 +51,7 @@ class EmployeeTree():
             if self.employeeList[i].getCode() > employee.getCode():
                 index = i
                 break
-                
+        # print(index)
         if index == len(self.employeeList):
             self.employeeList.append(employee)
         else:
@@ -59,6 +59,7 @@ class EmployeeTree():
 
     def addEmployee(self):
         code = input("\nEnter employee code: ")
+        code = int(code)
         name = input("Enter employee name: ")
         salary = input("Enter employee salary: ")
         allowance = input("Enter employee allowance: ")
@@ -68,23 +69,31 @@ class EmployeeTree():
         self.inputInfo(employee)
 
     def binarySearchEmployee(self, code):
-        left = int(self.employeeList[0].getCode())
-        right = int(self.employeeList[-1].getCode())
+        left = 0
+        right = len(self.employeeList) - 1
         
         while left <= right:
-            mid = left + (right - left) // 2
+            mid = (left + right) // 2
+            # print("Left:", left, "Right:", right, "Mid:", mid)
+            # print("Type of code at mid:", type(self.employeeList[mid].getCode()))
+            # print("Type of searching code:", type(code))
+            # print("Code at mid:", self.employeeList[mid].getCode())
+            # print("Searching for code:", code)
             if int(self.employeeList[mid].getCode()) == code:
+                # print("Employee found at index:", mid)
                 return mid
             elif int(self.employeeList[mid].getCode()) < code:
                 left = mid + 1
             else:
                 right = mid - 1
+        
         return False
     
     def searchEmployee(self):
         code = int(input("\nEnter code: "))
         index = self.binarySearchEmployee(code)
-        if not index:
+        print("Search result index:", index)
+        if index is False:
             print("Employee doesn't exist")
         else:
             self.employeeList[index].displayInfo()
