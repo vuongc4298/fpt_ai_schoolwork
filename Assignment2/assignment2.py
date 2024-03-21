@@ -38,8 +38,11 @@ class StockMarket():
             elif choice == '3':
                 self.searchStockIncreasingDay1_2()
             elif choice == '4':
-                self.searchMaxNoOfIncreasingDay()
+                maxDay = int(input("Enter the number of days: "))
+                self.searchMaxNoOfIncreasingDay(maxDay)
             elif choice == '5':
+                print("Author: Cao Tran Vuong")
+                print("Student ID: HE191055")
                 print("Exiting...")
                 break
             else:
@@ -78,7 +81,9 @@ class StockMarket():
                 sumStart += start
                 sumEnd += end
                 cnt += 1
-            print("Average differential over a {} days period: {:.3f}".format(cnt, (sumStart - sumEnd)/cnt))
+                if cnt > 10:
+                    break
+            print("Average differential over a {} days period: {:.3f}".format(cnt-1, (sumStart - sumEnd)/cnt))
 
     def searchStockMaxMin(self):
         symbol = input("\nEnter stock symbol: ")
@@ -101,15 +106,19 @@ class StockMarket():
                 continue
             print(stock.getSymbol())
 
-    def searchMaxNoOfIncreasingDay(self):
-        maxCount = 0
+    def searchMaxNoOfIncreasingDay(self, maxDay):
         cnt = dict()
+        maxCount = 0
         for stock in self.stockList:
             prices = stock.getPrices()
+            dayCount = 1
             count = 0
             for start, end in prices:
+                dayCount += 1
                 if end > start:
                     count += 1
+                if dayCount > maxDay:
+                    break
             cnt[stock.getSymbol()] = count
             if maxCount < count:
                 maxCount = count
