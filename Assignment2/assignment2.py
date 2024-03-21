@@ -31,7 +31,8 @@ class StockMarket():
             choice = input("Enter your choice: ")
 
             if choice == '1':
-                self.readFile()
+                fhand = input("Enter file name: ")
+                self.readFile(fhand)
                 self.displayStocksAvg()
             elif choice == '2':
                 self.searchStockMaxMin()
@@ -48,8 +49,7 @@ class StockMarket():
             else:
                 print("Invalid choice. Please try again.")
         
-    def readFile(self):
-        fhand = "data.txt"
+    def readFile(self, fhand):
         with open(fhand, 'r') as file:
             n = file.readline()
             lines = list(file.readlines())
@@ -83,17 +83,17 @@ class StockMarket():
                 cnt += 1
                 if cnt > 10:
                     break
-            print("Average differential over a {} days period: {:.3f}".format(cnt-1, (sumStart - sumEnd)/cnt))
+            print("Average differential over a {} days period: {:.3f}".format(cnt-1, (sumStart - sumEnd)/(cnt-1)))
 
     def searchStockMaxMin(self):
-        symbol = input("\nEnter stock symbol: ")
+        symbol = input("Enter stock symbol: ")
         for stock in self.stockList:
             if stock.getSymbol() == symbol:
                 print("\nStock found")
                 print(f"{symbol}")
                 prices = stock.getPrices()
-                high = max(prices, key = lambda x: x[1])
-                low = min(prices, key = lambda x: x[1])
+                high = max(prices[-10:], key = lambda x: x[1])
+                low = min(prices[-10:], key = lambda x: x[1])
                 print(f"Highest closing price: {high[1]}")
                 print(f"Lowest closing price: {low[1]}")
                 return 1
