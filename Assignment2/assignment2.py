@@ -83,7 +83,7 @@ class StockMarket():
                 cnt += 1
                 if cnt > 10:
                     break
-            print("Average differential over a {} days period: {:.3f}".format(cnt-1, (sumStart - sumEnd)/(cnt-1)))
+            print("Average differential over a {} days period: {:.3f}".format(cnt-1, (sumEnd - sumStart)/(cnt-1)))
 
     def searchStockMaxMin(self):
         symbol = input("Enter stock symbol: ")
